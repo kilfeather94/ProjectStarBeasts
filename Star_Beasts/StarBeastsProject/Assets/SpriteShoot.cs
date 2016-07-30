@@ -38,6 +38,11 @@ public class SpriteShoot : MonoBehaviour {
             audS.PlayOneShot(gunSound, 1);
         }
 
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            anim.SetTrigger("drink");
+        }
+
       if(Input.GetKeyDown(KeyCode.Q))
         {
            
