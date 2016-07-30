@@ -15,21 +15,26 @@ public class SpriteShoot : MonoBehaviour {
 
     public int weaponNum = 0;
 
+    Vector3 camPos;
+
+    
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         anim = GetComponent<Animator>();
         audS = GetComponent<AudioSource>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-
+        RayCasting();
 
         if (Input.GetMouseButtonDown(0))
         {
             anim.SetTrigger("fire");
-            ShootRay();
+          //  ShootRay();
             audS.PlayOneShot(gunSound, 1);
         }
 
@@ -67,6 +72,29 @@ public class SpriteShoot : MonoBehaviour {
         v = Input.GetAxis("Vertical");
     }
 
+  private void RayCasting()
+    {
+        // Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+    //    camPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 0.3f, Camera.main.transform.position.z);
+
+        Vector3 fwd = Camera.main.transform.TransformDirection(Vector3.forward);
+        RaycastHit hit;
+        Debug.DrawRay(Camera.main.transform.position, fwd * 9000, Color.green);
+
+        if(Input.GetMouseButtonDown(0) && Physics.Raycast(Camera.main.transform.position, fwd, out hit, 9000))
+        {
+
+            if(hit.transform.GetComponent<EnemyAI>())
+            {
+                hit.transform.GetComponent<EnemyAI>().health--;
+            }
+        }
+       
+    }
+
+
+    /*
     public void ShootRay()
     {
       //  if(Time.time > NextShot)
@@ -88,7 +116,7 @@ public class SpriteShoot : MonoBehaviour {
 
               //  RaycastHit[] hits = Physics.RaycastAll(startPos, hit.point - startPos, distance);
 
-            /*
+            
                 foreach (RaycastHit hit2 in hits)
                 {
                     if (hit2.transform.GetComponent<CapsuleCollider>()) // if hits rigidbody
@@ -100,7 +128,7 @@ public class SpriteShoot : MonoBehaviour {
 
                     //  }
                 }
-                */
+                
 
                 if(hit.transform.GetComponent<CapsuleCollider>())
                 {
@@ -116,4 +144,5 @@ public class SpriteShoot : MonoBehaviour {
 
       //  }
     }
+    */
 }

@@ -7,9 +7,16 @@ public class EnemyAI : MonoBehaviour {
 
     public int AngleNum;
 
+    public int health;
+
+    Animator enemyAnim;
+
+    public bool dead;
+
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+        enemyAnim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -17,6 +24,12 @@ public class EnemyAI : MonoBehaviour {
     {
         GetAngleIndex();
         Debug.Log(AngleNum);
+
+        if(health <= 0)
+        {
+            dead = true;
+            enemyAnim.SetBool("Dead", true);
+        }
 	}
 
     int GetAngleIndex()
