@@ -17,7 +17,8 @@ public class SpriteShoot : MonoBehaviour {
 
     Vector3 camPos;
 
-    
+    private Ray ray;
+    private RaycastHit hit;
 
 	// Use this for initialization
 	void Start ()
@@ -79,10 +80,12 @@ public class SpriteShoot : MonoBehaviour {
 
   private void RayCasting()
     {
+      
         // Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-    //    camPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 0.3f, Camera.main.transform.position.z);
+        //    camPos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 0.3f, Camera.main.transform.position.z);
 
+        /*
         Vector3 fwd = Camera.main.transform.TransformDirection(Vector3.forward);
         RaycastHit hit;
         Debug.DrawRay(Camera.main.transform.position, fwd * 9000, Color.green);
@@ -95,7 +98,21 @@ public class SpriteShoot : MonoBehaviour {
                 hit.transform.GetComponent<EnemyAI>().health--;
             }
         }
-       
+       */
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2, Screen.height / 2);
+            ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+            //   if (Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
+            if (Physics.Raycast(ray, out hit, 99999))
+            {
+                if(hit.transform.GetComponent<EnemyAI>())
+                {
+                    hit.transform.GetComponent<EnemyAI>().health--;
+                }
+            }
+        }
     }
 
 
