@@ -6,11 +6,6 @@ public class WeaponManager : MonoBehaviour {
 
     public List<GameObject> WeaponList = new List<GameObject>();
 
-    public List<Sprite> WeaponSprites = new List<Sprite>();
-
-    public Sprite Sprite;
-
-
     public WeaponProperties ActiveWeapon;
 
     public int MaxCarryingWeapons = 6;
@@ -18,6 +13,8 @@ public class WeaponManager : MonoBehaviour {
     public int weaponNumber = 0;
 
     SpriteRenderer rend;
+
+
 
     public enum WeaponType
     {
@@ -37,9 +34,6 @@ public class WeaponManager : MonoBehaviour {
         //ActiveWeapon = WeaponList[weaponNumber].gameObject;
         rend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-
-     
-
     }
 
 
@@ -51,21 +45,17 @@ public class WeaponManager : MonoBehaviour {
         if (Input.GetKeyDown("1"))
         {
             // SelectWeapon(0);
-           // weaponNumber = 0;
-           
-            anim.SetInteger("Weapon_ID", 0);
-            rend.sprite = WeaponSprites[0];
-           
+           // weaponNumber = 0;         
+            anim.SetInteger("Weapon_ID", 0);           
         }
         if(Input.GetKeyDown("2"))
         {
             //  SelectWeapon(1);
            // weaponNumber = 1;
             anim.SetInteger("Weapon_ID", 1);
-            rend.sprite = WeaponSprites[1];
         }
         
-     //   ActiveWeapon = WeaponList[weaponNumber].GetComponent<WeaponProperties>();
+        ActiveWeapon = WeaponList[weaponNumber].GetComponent<WeaponProperties>();
 
     }
 

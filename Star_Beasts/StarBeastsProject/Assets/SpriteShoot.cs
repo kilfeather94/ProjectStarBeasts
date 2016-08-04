@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SpriteShoot : MonoBehaviour {
@@ -6,6 +7,7 @@ public class SpriteShoot : MonoBehaviour {
     Animator anim;
 
     public Animator HolderAnim;
+    public GameObject crosshair;
 
     private float h;
     private float v;
@@ -19,6 +21,8 @@ public class SpriteShoot : MonoBehaviour {
 
     private Ray ray;
     private RaycastHit hit;
+
+    public GameObject[] BulletImpacts;
 
 	// Use this for initialization
 	void Start ()
@@ -49,7 +53,7 @@ public class SpriteShoot : MonoBehaviour {
            
                 weaponNum++;
                 anim.SetInteger("Weapon_ID", weaponNum);
-            if(weaponNum > 2)
+            if(weaponNum > 1)
             {
                 weaponNum = 0;
                 anim.SetInteger("Weapon_ID", weaponNum);
@@ -105,11 +109,19 @@ public class SpriteShoot : MonoBehaviour {
             ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
             //   if (Physics.Raycast(ray, out hit, Camera.main.farClipPlane))
-            if (Physics.Raycast(ray, out hit, 99999))
+            if (Physics.Raycast(ray, out hit, 5))
             {
                 if(hit.transform.GetComponent<EnemyAI>())
                 {
+
                     hit.transform.GetComponent<EnemyAI>().health--;
+                    Instantiate(BulletImpacts[1], hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
+                    // crosshair.GetComponent<Image>().color.
+                }
+
+                if(hit.transform.tag == "ground")
+                {
+                  Instantiate(BulletImpacts[0], hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal));
                 }
             }
         }
